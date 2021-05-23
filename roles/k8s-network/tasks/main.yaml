@@ -1,0 +1,57 @@
+- name: apply calico networking
+  become_user: vagrant
+  shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  register: c
+  tags: calico
+- debug:
+    var: c
+  tags: calico
+
+- name: check for all pods running
+  become_user: vagrant
+  shell: kubectl get pods -n kube-system | grep -v NAME | grep -v Running
+  register: run
+  failed_when: run.rc != 1
+  until: run.rc == 1
+  retries: 10
+  delay: 10
+  tags: run
+
+
+- name: get join token for workers
+  shell: kubeadm token create --print-join-command
+  register: token
+  tags: join
+
+- debug:
+    var: token.stdout
+  tags: join
+
+- name: join workers to cluster
+  shell: "{{ token.stdout }}"
+  register: join
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['workers'] }}"
+  tags: join
+
+
+- name: kubectl - wait for nodes
+  become_user: vagrant
+  shell: kubectl get nodes | grep NotReady
+  register: nodes
+  failed_when: nodes.rc != 1
+  until: nodes.rc == 1
+  retries: 10
+  delay: 10
+  tags: getnodes
+  delegate_to: control
+
+- name: kubectl show nodes
+  become_user: vagrant
+  shell: kubectl get nodes
+  register: nodes
+  tags: getnodes
+
+- debug:
+    var: nodes.stdout_lines
+  tags: getnodes

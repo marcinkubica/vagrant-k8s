@@ -1,0 +1,30 @@
+---
+- name: install containerd
+  apt:
+    name: containerd
+    state: present
+    update_cache: yes
+
+- name: grab default containerd config
+  shell: containerd config default
+  register: cconf
+
+- name: create /etc/containerd
+  file:
+    path: /etc/containerd
+    state: directory
+
+- name: generate containerd config
+  copy:
+    content: "{{ cconf.stdout }}"
+    dest: /etc/containerd/config.toml
+
+- name: restart containerd
+  systemd:
+    name: containerd
+    state: restarted
+
+- name: check containerd
+  systemd:
+    name: containerd
+    state: started

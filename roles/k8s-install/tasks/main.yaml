@@ -1,0 +1,40 @@
+---
+- name: install deps for k8s
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: yes
+
+- name: add k8s repo gpg key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: add k8s repository
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: install k8s components - kubelet, kubeadm, kubectl {{ k8s_ver }}
+  apt:
+    name:
+      - kubelet={{ k8s_ver }}
+      - kubeadm={{ k8s_ver }}
+      - kubectl={{ k8s_ver }}
+    state: present
+    update_cache: yes
+  tags: apt
+
+- name: mark hold k8s packages
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+  tags: hold
+

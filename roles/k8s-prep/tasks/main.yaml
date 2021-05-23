@@ -1,0 +1,9 @@
+---
+- import_tasks: prepare.yaml
+  tags: prepare
+
+- import_tasks: containerd.yaml
+  tags: containerd
+
+- import_tasks: disable-swap.yaml
+  tags: swap

@@ -1,0 +1,31 @@
+- name: pull k8s images
+  shell: kubeadm config images pull
+  register: pull
+  tags: pull
+
+- debug:
+    var: pull
+  tags: pull
+
+- name: initialise kubernetes cluster
+  shell: "kubeadm init --apiserver-advertise-address {{ apiserver_advert }} --pod-network-cidr {{ pod_cidr }}"
+  register: init
+  tags: init
+
+- debug:
+    var: init
+  tags: init
+
+- name: setup vagrant user for kube config
+  become_user: vagrant
+  shell: |
+    mkdir -p $HOME/.kube
+    sudo cp -fv /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown vagrant:vagrant $HOME/.kube/config
+    kubectl version
+  tags: kconfig
+  register: w
+- debug:
+    var: w
+  tags: kconfig
+

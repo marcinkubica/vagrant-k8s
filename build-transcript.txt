@@ -1,0 +1,609 @@
+✔ ~/Projects/vagrant-k8s [master L|●16✚ 7]
+18:45 $ vagrant up && ansible-playbook site.yaml
+Bringing machine 'control' up with 'virtualbox' provider...
+Bringing machine 'node-01' up with 'virtualbox' provider...
+Bringing machine 'node-02' up with 'virtualbox' provider...
+==> control: Importing base box 'ubuntu/focal64'...
+==> control: Matching MAC address for NAT networking...
+==> control: Checking if box 'ubuntu/focal64' version '20210518.0.0' is up to date...
+==> control: Setting the name of the VM: vagrant-k8s_control_1621791967702_27705
+==> control: Clearing any previously set network interfaces...
+==> control: Preparing network interfaces based on configuration...
+    control: Adapter 1: nat
+    control: Adapter 2: hostonly
+==> control: Forwarding ports...
+    control: 22 (guest) => 60200 (host) (adapter 1)
+    control: 6443 (guest) => 6443 (host) (adapter 1)
+    control: 22 (guest) => 2222 (host) (adapter 1)
+==> control: Running 'pre-boot' VM customizations...
+==> control: Booting VM...
+==> control: Waiting for machine to boot. This may take a few minutes...
+    control: SSH address: 127.0.0.1:2222
+    control: SSH username: vagrant
+    control: SSH auth method: private key
+    control:
+    control: Vagrant insecure key detected. Vagrant will automatically replace
+    control: this with a newly generated keypair for better security.
+    control:
+    control: Inserting generated public key within guest...
+    control: Removing insecure key from the guest if it's present...
+    control: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> control: Machine booted and ready!
+==> control: Checking for guest additions in VM...
+==> control: Setting hostname...
+==> control: Configuring and enabling network interfaces...
+==> control: Mounting shared folders...
+    control: /vagrant => /home/booker/Projects/vagrant-k8s
+==> node-01: Importing base box 'ubuntu/focal64'...
+==> node-01: Matching MAC address for NAT networking...
+==> node-01: Checking if box 'ubuntu/focal64' version '20210518.0.0' is up to date...
+==> node-01: Setting the name of the VM: vagrant-k8s_node-01_1621792008003_61130
+==> node-01: Fixed port collision for 22 => 2222. Now on port 2200.
+==> node-01: Clearing any previously set network interfaces...
+==> node-01: Preparing network interfaces based on configuration...
+    node-01: Adapter 1: nat
+    node-01: Adapter 2: hostonly
+==> node-01: Forwarding ports...
+    node-01: 22 (guest) => 60201 (host) (adapter 1)
+    node-01: 22 (guest) => 2200 (host) (adapter 1)
+==> node-01: Running 'pre-boot' VM customizations...
+==> node-01: Booting VM...
+==> node-01: Waiting for machine to boot. This may take a few minutes...
+    node-01: SSH address: 127.0.0.1:2200
+    node-01: SSH username: vagrant
+    node-01: SSH auth method: private key
+    node-01: Warning: Connection reset. Retrying...
+    node-01: Warning: Remote connection disconnect. Retrying...
+    node-01:
+    node-01: Vagrant insecure key detected. Vagrant will automatically replace
+    node-01: this with a newly generated keypair for better security.
+    node-01:
+    node-01: Inserting generated public key within guest...
+    node-01: Removing insecure key from the guest if it's present...
+    node-01: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> node-01: Machine booted and ready!
+==> node-01: Checking for guest additions in VM...
+==> node-01: Setting hostname...
+==> node-01: Configuring and enabling network interfaces...
+==> node-01: Mounting shared folders...
+    node-01: /vagrant => /home/booker/Projects/vagrant-k8s
+==> node-02: Importing base box 'ubuntu/focal64'...
+==> node-02: Matching MAC address for NAT networking...
+==> node-02: Checking if box 'ubuntu/focal64' version '20210518.0.0' is up to date...
+==> node-02: Setting the name of the VM: vagrant-k8s_node-02_1621792054825_9053
+==> node-02: Fixed port collision for 22 => 2222. Now on port 2201.
+==> node-02: Clearing any previously set network interfaces...
+==> node-02: Preparing network interfaces based on configuration...
+    node-02: Adapter 1: nat
+    node-02: Adapter 2: hostonly
+==> node-02: Forwarding ports...
+    node-02: 22 (guest) => 60202 (host) (adapter 1)
+    node-02: 22 (guest) => 2201 (host) (adapter 1)
+==> node-02: Running 'pre-boot' VM customizations...
+==> node-02: Booting VM...
+==> node-02: Waiting for machine to boot. This may take a few minutes...
+    node-02: SSH address: 127.0.0.1:2201
+    node-02: SSH username: vagrant
+    node-02: SSH auth method: private key
+    node-02: Warning: Connection reset. Retrying...
+    node-02: Warning: Remote connection disconnect. Retrying...
+    node-02:
+    node-02: Vagrant insecure key detected. Vagrant will automatically replace
+    node-02: this with a newly generated keypair for better security.
+    node-02:
+    node-02: Inserting generated public key within guest...
+    node-02: Removing insecure key from the guest if it's present...
+    node-02: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> node-02: Machine booted and ready!
+==> node-02: Checking for guest additions in VM...
+==> node-02: Setting hostname...
+==> node-02: Configuring and enabling network interfaces...
+==> node-02: Mounting shared folders...
+    node-02: /vagrant => /home/booker/Projects/vagrant-k8s
+
+PLAY [all] ********************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:48:03 +0100 (0:00:00.029)       0:00:00.029 ************
+ok: [control]
+ok: [node-01]
+ok: [node-02]
+
+TASK [k8s-prep : create containerd.conf] **************************************************************************************************
+Sunday 23 May 2021  18:48:05 +0100 (0:00:02.184)       0:00:02.214 ************
+changed: [control]
+changed: [node-01]
+changed: [node-02]
+
+TASK [k8s-prep : insert containerd modules] ***********************************************************************************************
+Sunday 23 May 2021  18:48:06 +0100 (0:00:00.773)       0:00:02.987 ************
+changed: [node-01] => (item=overlay)
+changed: [control] => (item=overlay)
+changed: [node-02] => (item=overlay)
+changed: [node-02] => (item=br_netfilter)
+changed: [node-01] => (item=br_netfilter)
+changed: [control] => (item=br_netfilter)
+
+TASK [k8s-prep : create kubernetes-cri sysctl] ********************************************************************************************
+Sunday 23 May 2021  18:48:07 +0100 (0:00:00.807)       0:00:03.794 ************
+changed: [node-01]
+changed: [control]
+changed: [node-02]
+
+TASK [k8s-prep : reload sysctl] ***********************************************************************************************************
+Sunday 23 May 2021  18:48:07 +0100 (0:00:00.671)       0:00:04.465 ************
+changed: [node-02]
+changed: [node-01]
+changed: [control]
+
+TASK [k8s-prep : install containerd] ******************************************************************************************************
+Sunday 23 May 2021  18:48:08 +0100 (0:00:00.438)       0:00:04.904 ************
+changed: [node-02]
+changed: [node-01]
+changed: [control]
+
+TASK [k8s-prep : grab default containerd config] ******************************************************************************************
+Sunday 23 May 2021  18:48:56 +0100 (0:00:47.971)       0:00:52.875 ************
+changed: [control]
+changed: [node-02]
+changed: [node-01]
+
+TASK [k8s-prep : create /etc/containerd] **************************************************************************************************
+Sunday 23 May 2021  18:48:56 +0100 (0:00:00.400)       0:00:53.276 ************
+changed: [node-01]
+changed: [node-02]
+changed: [control]
+
+TASK [k8s-prep : generate containerd config] **********************************************************************************************
+Sunday 23 May 2021  18:48:56 +0100 (0:00:00.475)       0:00:53.751 ************
+changed: [control]
+changed: [node-01]
+changed: [node-02]
+
+TASK [k8s-prep : restart containerd] ******************************************************************************************************
+Sunday 23 May 2021  18:48:57 +0100 (0:00:00.649)       0:00:54.400 ************
+changed: [node-02]
+changed: [node-01]
+changed: [control]
+
+TASK [k8s-prep : check containerd] ********************************************************************************************************
+Sunday 23 May 2021  18:48:58 +0100 (0:00:00.872)       0:00:55.273 ************
+ok: [control]
+ok: [node-01]
+ok: [node-02]
+
+TASK [k8s-prep : sisable swap] ************************************************************************************************************
+Sunday 23 May 2021  18:48:58 +0100 (0:00:00.495)       0:00:55.768 ************
+changed: [node-01]
+changed: [control]
+changed: [node-02]
+
+TASK [k8s-prep : comment swap entries in /etc/fstab] **************************************************************************************
+Sunday 23 May 2021  18:48:59 +0100 (0:00:00.335)       0:00:56.103 ************
+ok: [node-02]
+ok: [control]
+ok: [node-01]
+
+TASK [k8s-install : install deps for k8s] *************************************************************************************************
+Sunday 23 May 2021  18:48:59 +0100 (0:00:00.400)       0:00:56.504 ************
+changed: [node-01]
+changed: [node-02]
+changed: [control]
+
+TASK [k8s-install : add k8s repo gpg key] *************************************************************************************************
+Sunday 23 May 2021  18:49:05 +0100 (0:00:05.298)       0:01:01.803 ************
+changed: [control]
+changed: [node-02]
+changed: [node-01]
+
+TASK [k8s-install : add k8s repository] ***************************************************************************************************
+Sunday 23 May 2021  18:49:06 +0100 (0:00:01.407)       0:01:03.210 ************
+changed: [control]
+changed: [node-01]
+changed: [node-02]
+
+TASK [k8s-install : set k8s version] ******************************************************************************************************
+Sunday 23 May 2021  18:49:19 +0100 (0:00:12.878)       0:01:16.089 ************
+ok: [control]
+ok: [node-01]
+ok: [node-02]
+
+TASK [k8s-install : install k8s components - kubelet, kubeadm, kubectl 1.20.1-00] *********************************************************
+Sunday 23 May 2021  18:49:19 +0100 (0:00:00.066)       0:01:16.155 ************
+changed: [node-02]
+changed: [node-01]
+changed: [control]
+
+TASK [k8s-install : mark hold k8s packages] ***********************************************************************************************
+Sunday 23 May 2021  18:50:18 +0100 (0:00:59.010)       0:02:15.165 ************
+changed: [node-01] => (item=kubelet)
+changed: [node-02] => (item=kubelet)
+changed: [control] => (item=kubelet)
+changed: [node-01] => (item=kubeadm)
+changed: [node-02] => (item=kubeadm)
+changed: [control] => (item=kubeadm)
+changed: [node-01] => (item=kubectl)
+changed: [node-02] => (item=kubectl)
+changed: [control] => (item=kubectl)
+
+PLAY [control] ****************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:50:19 +0100 (0:00:01.255)       0:02:16.421 ************
+ok: [control]
+
+TASK [k8s-init : pull k8s images] *********************************************************************************************************
+Sunday 23 May 2021  18:50:21 +0100 (0:00:01.604)       0:02:18.026 ************
+changed: [control]
+
+TASK [k8s-init : debug] *******************************************************************************************************************
+Sunday 23 May 2021  18:51:21 +0100 (0:01:00.283)       0:03:18.309 ************
+ok: [control] => {
+    "pull": {
+        "changed": true,
+        "cmd": "kubeadm config images pull",
+        "delta": "0:01:00.004985",
+        "end": "2021-05-23 17:51:20.267505",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-05-23 17:50:20.262520",
+        "stderr": "I0523 17:50:20.755441    5656 version.go:251] remote version is much newer: v1.21.1; falling back to: stable-1.20",
+        "stderr_lines": [
+            "I0523 17:50:20.755441    5656 version.go:251] remote version is much newer: v1.21.1; falling back to: stable-1.20"
+        ],
+        "stdout": "[config/images] Pulled k8s.gcr.io/kube-apiserver:v1.20.7\n[config/images] Pulled k8s.gcr.io/kube-controller-manager:v1.20.7\n[config/images] Pulled k8s.gcr.io/kube-scheduler:v1.20.7\n[config/images] Pulled k8s.gcr.io/kube-proxy:v1.20.7\n[config/images] Pulled k8s.gcr.io/pause:3.2\n[config/images] Pulled k8s.gcr.io/etcd:3.4.13-0\n[config/images] Pulled k8s.gcr.io/coredns:1.7.0",
+        "stdout_lines": [
+            "[config/images] Pulled k8s.gcr.io/kube-apiserver:v1.20.7",
+            "[config/images] Pulled k8s.gcr.io/kube-controller-manager:v1.20.7",
+            "[config/images] Pulled k8s.gcr.io/kube-scheduler:v1.20.7",
+            "[config/images] Pulled k8s.gcr.io/kube-proxy:v1.20.7",
+            "[config/images] Pulled k8s.gcr.io/pause:3.2",
+            "[config/images] Pulled k8s.gcr.io/etcd:3.4.13-0",
+            "[config/images] Pulled k8s.gcr.io/coredns:1.7.0"
+        ]
+    }
+}
+
+TASK [k8s-init : initialise kubernetes cluster] *******************************************************************************************
+Sunday 23 May 2021  18:51:21 +0100 (0:00:00.022)       0:03:18.331 ************
+changed: [control]
+
+TASK [k8s-init : debug] *******************************************************************************************************************
+Sunday 23 May 2021  18:51:57 +0100 (0:00:36.173)       0:03:54.505 ************
+ok: [control] => {
+    "init": {
+        "changed": true,
+        "cmd": "kubeadm init --apiserver-advertise-address 10.0.0.9 --pod-network-cidr 192.168.0.0/16",
+        "delta": "0:00:35.856010",
+        "end": "2021-05-23 17:51:56.504604",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-05-23 17:51:20.648594",
+        "stderr": "I0523 17:51:21.116886    5912 version.go:251] remote version is much newer: v1.21.1; falling back to: stable-1.20",
+        "stderr_lines": [
+            "I0523 17:51:21.116886    5912 version.go:251] remote version is much newer: v1.21.1; falling back to: stable-1.20"
+        ],
+
+        "stdout_lines": [
+            "[init] Using Kubernetes version: v1.20.7",
+            "[preflight] Running pre-flight checks",
+            "[preflight] Pulling images required for setting up a Kubernetes cluster",
+            "[preflight] This might take a minute or two, depending on the speed of your internet connection",
+            "[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'",
+            "[certs] Using certificateDir folder \"/etc/kubernetes/pki\"",
+            "[certs] Generating \"ca\" certificate and key",
+            "[certs] Generating \"apiserver\" certificate and key",
+            "[certs] apiserver serving cert is signed for DNS names [control kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.0.9]",
+            "[certs] Generating \"apiserver-kubelet-client\" certificate and key",
+            "[certs] Generating \"front-proxy-ca\" certificate and key",
+            "[certs] Generating \"front-proxy-client\" certificate and key",
+            "[certs] Generating \"etcd/ca\" certificate and key",
+            "[certs] Generating \"etcd/server\" certificate and key",
+            "[certs] etcd/server serving cert is signed for DNS names [control localhost] and IPs [10.0.0.9 127.0.0.1 ::1]",
+            "[certs] Generating \"etcd/peer\" certificate and key",
+            "[certs] etcd/peer serving cert is signed for DNS names [control localhost] and IPs [10.0.0.9 127.0.0.1 ::1]",
+            "[certs] Generating \"etcd/healthcheck-client\" certificate and key",
+            "[certs] Generating \"apiserver-etcd-client\" certificate and key",
+            "[certs] Generating \"sa\" key and public key",
+            "[kubeconfig] Using kubeconfig folder \"/etc/kubernetes\"",
+            "[kubeconfig] Writing \"admin.conf\" kubeconfig file",
+            "[kubeconfig] Writing \"kubelet.conf\" kubeconfig file",
+            "[kubeconfig] Writing \"controller-manager.conf\" kubeconfig file",
+            "[kubeconfig] Writing \"scheduler.conf\" kubeconfig file",
+            "[kubelet-start] Writing kubelet environment file with flags to file \"/var/lib/kubelet/kubeadm-flags.env\"",
+            "[kubelet-start] Writing kubelet configuration to file \"/var/lib/kubelet/config.yaml\"",
+            "[kubelet-start] Starting the kubelet",
+            "[control-plane] Using manifest folder \"/etc/kubernetes/manifests\"",
+            "[control-plane] Creating static Pod manifest for \"kube-apiserver\"",
+            "[control-plane] Creating static Pod manifest for \"kube-controller-manager\"",
+            "[control-plane] Creating static Pod manifest for \"kube-scheduler\"",
+            "[etcd] Creating static Pod manifest for local etcd in \"/etc/kubernetes/manifests\"",
+            "[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory \"/etc/kubernetes/manifests\". This can take up to 4m0s",
+            "[apiclient] All control plane components are healthy after 27.502689 seconds",
+            "[upload-config] Storing the configuration used in ConfigMap \"kubeadm-config\" in the \"kube-system\" Namespace",
+            "[kubelet] Creating a ConfigMap \"kubelet-config-1.20\" in namespace kube-system with the configuration for the kubelets in the cluster",
+            "[upload-certs] Skipping phase. Please see --upload-certs",
+            "[mark-control-plane] Marking the node control as control-plane by adding the labels \"node-role.kubernetes.io/master=''\" and \"node-role.kubernetes.io/control-plane='' (deprecated)\"",
+            "[mark-control-plane] Marking the node control as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]",
+            "[bootstrap-token] Using token: 8dn7ay.5na2i4mo3hsvkgkx",
+            "[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles",
+            "[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes",
+            "[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials",
+            "[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token",
+            "[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster",
+            "[bootstrap-token] Creating the \"cluster-info\" ConfigMap in the \"kube-public\" namespace",
+            "[kubelet-finalize] Updating \"/etc/kubernetes/kubelet.conf\" to point to a rotatable kubelet client certificate and key",
+            "[addons] Applied essential addon: CoreDNS",
+            "[addons] Applied essential addon: kube-proxy",
+            "",
+            "Your Kubernetes control-plane has initialized successfully!",
+            "",
+            "To start using your cluster, you need to run the following as a regular user:",
+            "",
+            "  mkdir -p $HOME/.kube",
+            "  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config",
+            "  sudo chown $(id -u):$(id -g) $HOME/.kube/config",
+            "",
+            "Alternatively, if you are the root user, you can run:",
+            "",
+            "  export KUBECONFIG=/etc/kubernetes/admin.conf",
+            "",
+            "You should now deploy a pod network to the cluster.",
+            "Run \"kubectl apply -f [podnetwork].yaml\" with one of the options listed at:",
+            "  https://kubernetes.io/docs/concepts/cluster-administration/addons/",
+            "",
+            "Then you can join any number of worker nodes by running the following on each as root:",
+            "",
+            "kubeadm join 10.0.0.9:6443 --token 8dn7ay.5na2i4mo3hsvkgkx \\",
+            "    --discovery-token-ca-cert-hash sha256:6d7299f57302359183f30547eb377b948d9a2a4084aeebee343785f3691408ae "
+        ]
+    }
+}
+
+TASK [k8s-init : setup vagrant user for kube config] **************************************************************************************
+Sunday 23 May 2021  18:51:57 +0100 (0:00:00.024)       0:03:54.530 ************
+[WARNING]: Consider using the file module with state=directory rather than running 'mkdir'.  If you need to use command because file is
+insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg to get rid of this message.
+changed: [control]
+
+TASK [k8s-init : debug] *******************************************************************************************************************
+Sunday 23 May 2021  18:51:58 +0100 (0:00:00.516)       0:03:55.047 ************
+ok: [control] => {
+    "w": {
+        "changed": true,
+        "cmd": "mkdir -p $HOME/.kube\nsudo cp -fv /etc/kubernetes/admin.conf $HOME/.kube/config\nsudo chown vagrant:vagrant $HOME/.kube/config\nkubectl version\n",
+        "delta": "0:00:00.149584",
+        "end": "2021-05-23 17:51:57.040146",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-05-23 17:51:56.890562",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout_lines": [
+            "'/etc/kubernetes/admin.conf' -> '/home/vagrant/.kube/config'",
+            "Client Version: version.Info{Major:\"1\", Minor:\"20\", GitVersion:\"v1.20.1\", GitCommit:\"c4d752765b3bbac2237bf87cf0b1c2e307844666\", GitTreeState:\"clean\", BuildDate:\"2020-12-18T12:09:25Z\", GoVersion:\"go1.15.5\", Compiler:\"gc\", Platform:\"linux/amd64\"}",
+            "Server Version: version.Info{Major:\"1\", Minor:\"20\", GitVersion:\"v1.20.7\", GitCommit:\"132a687512d7fb058d0f5890f07d4121b3f0a2e2\", GitTreeState:\"clean\", BuildDate:\"2021-05-12T12:32:49Z\", GoVersion:\"go1.15.12\", Compiler:\"gc\", Platform:\"linux/amd64\"}"
+        ],
+        "warnings": [
+            "Consider using the file module with state=directory rather than running 'mkdir'.  If you need to use command because file is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg to get rid of this message."
+        ]
+    }
+}
+
+TASK [k8s-network : apply calico networking] **********************************************************************************************
+Sunday 23 May 2021  18:51:58 +0100 (0:00:00.023)       0:03:55.071 ************
+changed: [control]
+
+TASK [k8s-network : debug] ****************************************************************************************************************
+Sunday 23 May 2021  18:51:59 +0100 (0:00:01.396)       0:03:56.467 ************
+ok: [control] => {
+    "c": {
+        "changed": true,
+        "cmd": "kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml",
+        "delta": "0:00:01.101124",
+        "end": "2021-05-23 17:51:58.473673",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-05-23 17:51:57.372549",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout_lines": [
+            "configmap/calico-config created",
+            "customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/bgppeers.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/blockaffinities.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/ipamblocks.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/ipamconfigs.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/ipamhandles.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/kubecontrollersconfigurations.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created",
+            "customresourcedefinition.apiextensions.k8s.io/networksets.crd.projectcalico.org created",
+            "clusterrole.rbac.authorization.k8s.io/calico-kube-controllers created",
+            "clusterrolebinding.rbac.authorization.k8s.io/calico-kube-controllers created",
+            "clusterrole.rbac.authorization.k8s.io/calico-node created",
+            "clusterrolebinding.rbac.authorization.k8s.io/calico-node created",
+            "daemonset.apps/calico-node created",
+            "serviceaccount/calico-node created",
+            "deployment.apps/calico-kube-controllers created",
+            "serviceaccount/calico-kube-controllers created",
+            "poddisruptionbudget.policy/calico-kube-controllers created"
+        ]
+    }
+}
+
+TASK [k8s-network : check for all pods running] *******************************************************************************************
+Sunday 23 May 2021  18:51:59 +0100 (0:00:00.023)       0:03:56.491 ************
+changed: [control]
+
+TASK [k8s-network : get join token for workers] *******************************************************************************************
+Sunday 23 May 2021  18:52:00 +0100 (0:00:00.428)       0:03:56.919 ************
+changed: [control]
+
+TASK [k8s-network : debug] ****************************************************************************************************************
+Sunday 23 May 2021  18:52:00 +0100 (0:00:00.402)       0:03:57.321 ************
+ok: [control] => {
+    "token.stdout": "kubeadm join 10.0.0.9:6443 --token z8567z.jvax376dzn9krsas     --discovery-token-ca-cert-hash sha256:6d7299f57302359183f30547eb377b948d9a2a4084aeebee343785f3691408ae "
+}
+
+TASK [k8s-network : join workers to cluster] **********************************************************************************************
+Sunday 23 May 2021  18:52:00 +0100 (0:00:00.039)       0:03:57.361 ************
+changed: [control -> 127.0.0.1] => (item=node-01)
+changed: [control -> 127.0.0.1] => (item=node-02)
+
+TASK [k8s-network : kubectl get nodes] ****************************************************************************************************
+Sunday 23 May 2021  18:52:44 +0100 (0:00:43.835)       0:04:41.196 ************
+changed: [control -> 127.0.0.1]
+
+TASK [k8s-network : debug] ****************************************************************************************************************
+Sunday 23 May 2021  18:52:44 +0100 (0:00:00.496)       0:04:41.693 ************
+ok: [control] => {
+    "nodes.stdout_lines": [
+        "NAME      STATUS     ROLES                  AGE   VERSION",
+        "control   Ready      control-plane,master   50s   v1.20.1",
+        "node-01   NotReady   <none>                 18s   v1.20.1",
+        "node-02   NotReady   <none>                 0s    v1.20.1"
+    ]
+}
+
+PLAY RECAP ********************************************************************************************************************************
+control                    : ok=34   changed=23   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-01                    : ok=19   changed=15   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-02                    : ok=19   changed=15   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+Sunday 23 May 2021  18:52:44 +0100 (0:00:00.019)       0:04:41.713 ************
+===============================================================================
+k8s-init : pull k8s images -------------------------------------------------------------------------------------------------------- 60.28s
+k8s-install : install k8s components - kubelet, kubeadm, kubectl 1.20.1-00 -------------------------------------------------------- 59.01s
+k8s-prep : install containerd ----------------------------------------------------------------------------------------------------- 47.97s
+k8s-network : join workers to cluster --------------------------------------------------------------------------------------------- 43.84s
+k8s-init : initialise kubernetes cluster ------------------------------------------------------------------------------------------ 36.17s
+k8s-install : add k8s repository -------------------------------------------------------------------------------------------------- 12.88s
+k8s-install : install deps for k8s ------------------------------------------------------------------------------------------------- 5.30s
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 2.18s
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 1.60s
+k8s-install : add k8s repo gpg key ------------------------------------------------------------------------------------------------- 1.41s
+k8s-network : apply calico networking ---------------------------------------------------------------------------------------------- 1.40s
+k8s-install : mark hold k8s packages ----------------------------------------------------------------------------------------------- 1.26s
+k8s-prep : restart containerd ------------------------------------------------------------------------------------------------------ 0.87s
+k8s-prep : insert containerd modules ----------------------------------------------------------------------------------------------- 0.81s
+k8s-prep : create containerd.conf -------------------------------------------------------------------------------------------------- 0.77s
+k8s-prep : create kubernetes-cri sysctl -------------------------------------------------------------------------------------------- 0.67s
+k8s-prep : generate containerd config ---------------------------------------------------------------------------------------------- 0.65s
+k8s-init : setup vagrant user for kube config -------------------------------------------------------------------------------------- 0.52s
+k8s-network : kubectl get nodes ---------------------------------------------------------------------------------------------------- 0.50s
+k8s-prep : check containerd -------------------------------------------------------------------------------------------------------- 0.50s
+✔ ~/Projects/vagrant-k8s [master L|●17✚ 9]
+18:52 $ ansible-playbook site.yaml -t getnodes
+
+PLAY [all] ********************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:54:58 +0100 (0:00:00.032)       0:00:00.032 ************
+ok: [node-02]
+ok: [node-01]
+ok: [control]
+
+PLAY [control] ****************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:55:00 +0100 (0:00:02.595)       0:00:02.627 ************
+ok: [control]
+
+TASK [k8s-network : kubectl get nodes] ****************************************************************************************************
+Sunday 23 May 2021  18:55:02 +0100 (0:00:01.230)       0:00:03.858 ************
+FAILED - RETRYING: kubectl get nodes (10 retries left).
+FAILED - RETRYING: kubectl get nodes (9 retries left).
+^C [ERROR]: User interrupted execution
+✘-99 ~/Projects/vagrant-k8s [master L|●17✚ 9]
+18:55 $ ansible-playbook site.yaml -t getnodes
+
+PLAY [all] ********************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:55:19 +0100 (0:00:00.035)       0:00:00.035 ************
+ok: [node-01]
+ok: [node-02]
+ok: [control]
+
+PLAY [control] ****************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:55:21 +0100 (0:00:01.920)       0:00:01.955 ************
+ok: [control]
+
+TASK [k8s-network : kubectl get nodes] ****************************************************************************************************
+Sunday 23 May 2021  18:55:22 +0100 (0:00:01.091)       0:00:03.047 ************
+changed: [control -> 127.0.0.1]
+
+TASK [k8s-network : debug] ****************************************************************************************************************
+Sunday 23 May 2021  18:55:22 +0100 (0:00:00.506)       0:00:03.554 ************
+ok: [control] => {
+    "nodes.stdout_lines": []
+}
+
+PLAY RECAP ********************************************************************************************************************************
+control                    : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-01                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-02                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+Sunday 23 May 2021  18:55:22 +0100 (0:00:00.043)       0:00:03.597 ************
+===============================================================================
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 1.92s
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 1.09s
+k8s-network : kubectl get nodes ---------------------------------------------------------------------------------------------------- 0.51s
+k8s-network : debug ---------------------------------------------------------------------------------------------------------------- 0.04s
+✔ ~/Projects/vagrant-k8s [master L|●17✚ 9]
+18:55 $ ansible-playbook site.yaml -t getnodes
+
+PLAY [all] ********************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:56:37 +0100 (0:00:00.035)       0:00:00.036 ************
+ok: [node-01]
+ok: [node-02]
+ok: [control]
+
+PLAY [control] ****************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+Sunday 23 May 2021  18:56:40 +0100 (0:00:02.330)       0:00:02.366 ************
+ok: [control]
+
+TASK [k8s-network : kubectl - wait for nodes] *********************************************************************************************
+Sunday 23 May 2021  18:56:42 +0100 (0:00:02.199)       0:00:04.565 ************
+changed: [control -> 127.0.0.1]
+
+TASK [k8s-network : kubectl show nodes] ***************************************************************************************************
+Sunday 23 May 2021  18:56:43 +0100 (0:00:00.564)       0:00:05.129 ************
+changed: [control]
+
+TASK [k8s-network : debug] ****************************************************************************************************************
+Sunday 23 May 2021  18:56:43 +0100 (0:00:00.400)       0:00:05.530 ************
+ok: [control] => {
+    "nodes.stdout_lines": [
+        "NAME      STATUS   ROLES                  AGE     VERSION",
+        "control   Ready    control-plane,master   4m49s   v1.20.1",
+        "node-01   Ready    <none>                 4m17s   v1.20.1",
+        "node-02   Ready    <none>                 3m59s   v1.20.1"
+    ]
+}
+
+PLAY RECAP ********************************************************************************************************************************
+control                    : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-01                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node-02                    : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+Sunday 23 May 2021  18:56:43 +0100 (0:00:00.043)       0:00:05.574 ************
+===============================================================================
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 2.33s
+Gathering Facts -------------------------------------------------------------------------------------------------------------------- 2.20s
+k8s-network : kubectl - wait for nodes --------------------------------------------------------------------------------------------- 0.56s
+k8s-network : kubectl show nodes --------------------------------------------------------------------------------------------------- 0.40s
+k8s-network : debug ---------------------------------------------------------------------------------------------------------------- 0.04s
+

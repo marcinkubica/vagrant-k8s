@@ -1,0 +1,23 @@
+---
+- hosts: all
+
+  roles:
+    - role: k8s-prep
+      tags: k8s-prep
+
+    - role: k8s-install
+      tags: k8s-install
+
+- hosts: control
+
+  roles:
+    - role: k8s-init
+      vars:
+        pod_cidr: 192.168.0.0/16
+        apiserver_advert: 10.0.0.9
+      tags: init
+
+    - role: k8s-network
+
+
+    
