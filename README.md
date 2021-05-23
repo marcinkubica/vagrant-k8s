@@ -21,7 +21,7 @@ Add `127.0.0.1 kubernetes.default` to `/etc/hosts` on your host if you wish to t
 
 Uncomment last part in `Vagrantfile` if you want to have full-auto install with just `vagrant up`
 
-#Usage
+# Usage
 ```
 vagrant up && ansible-playbook site.yaml
 ```
