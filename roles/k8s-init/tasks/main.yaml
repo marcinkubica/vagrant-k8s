@@ -8,7 +8,7 @@
   tags: pull
 
 - name: initialise kubernetes cluster
-  shell: "kubeadm init --apiserver-advertise-address {{ apiserver_advert }} --pod-network-cidr {{ pod_cidr }}"
+  shell: "kubeadm init --apiserver-advertise-address {{ internal_ipv4 }} --pod-network-cidr {{ pod_cidr }}"
   register: init
   tags: init
 
@@ -16,16 +16,22 @@
     var: init
   tags: init
 
-- name: setup vagrant user for kube config
-  become_user: vagrant
-  shell: |
-    mkdir -p $HOME/.kube
-    sudo cp -fv /etc/kubernetes/admin.conf $HOME/.kube/config
-    sudo chown vagrant:vagrant $HOME/.kube/config
-    kubectl version
+- name: setup vagrant user for kube config | directory
+  file:
+    path: /home/vagrant/.kube
+    state: directory
+    mode: '0700'
+    owner: vagrant
+    group: vagrant
   tags: kconfig
-  register: w
-- debug:
-    var: w
+
+- name: setup vagrant user for kube config | copy admin conf
+  copy:
+    remote_src: yes
+    src: /etc/kubernetes/admin.conf
+    dest: /home/vagrant/.kube/config
+    mode: '0600'
+    owner: vagrant
+    group: vagrant
   tags: kconfig
 

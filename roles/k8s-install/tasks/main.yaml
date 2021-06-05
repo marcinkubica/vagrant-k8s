@@ -18,6 +18,14 @@
     repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
     state: present
 
+- name: create /ect/default/kubelet to setup INTERNAL-IP for a node
+  template:
+    src: etc/default/kubelet
+    dest: /etc/default/kubelet
+  tags: template-ip
+
+
+
 - name: install k8s components - kubelet, kubeadm, kubectl {{ k8s_ver }}
   apt:
     name:
