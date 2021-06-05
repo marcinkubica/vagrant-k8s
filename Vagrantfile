@@ -45,11 +45,11 @@ Vagrant.configure("2") do |config|
       end
   end
 
-  # Uncomment if you wish to execute at 'vagrant up'
+  # Uncomment if you wish to execute full auto deployment just with 'vagrant up'
   #
   #config.trigger.after :up do |trigger|
   #  trigger.name = "ansible trigger"
-  #  trigger.info = "Attempting to run ansible-playbook site.yaml"
+  #  trigger.info = "Attempting to run ./vagrant-k8s.sh"
   #  trigger.run  = { path: "vagrant-k8s.sh" }
   #end
 

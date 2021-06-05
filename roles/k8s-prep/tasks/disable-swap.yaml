@@ -1,7 +1,7 @@
-- name: sisable swap
+- name: disable swap
   shell: swapoff -a
 
-- name: comment swap entries in /etc/fstab
+- name: comment out swap entries in /etc/fstab
   replace:
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'

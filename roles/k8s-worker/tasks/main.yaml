@@ -1,0 +1,43 @@
+---
+- name: get join token for workers
+  shell: kubeadm token create --print-join-command
+  register: token
+  delegate_to: control
+  tags: ['join','jointoken']
+
+- debug:
+    var: token.stdout
+  delegate_to: control
+  tags: ['join','jointoken']
+
+- name: join workers to cluster
+  shell: "{{ token.stdout }}"
+  register: join
+  tags: join
+
+
+- name: kubectl - wait for nodes
+  become_user: vagrant
+  shell: kubectl get nodes | grep NotReady
+  register: nodes
+  failed_when: nodes.rc != 1
+  until: nodes.rc == 1
+  retries: 10
+  delay: 10
+  tags: getnodes
+  delegate_to: control
+  run_once: yes
+
+- name: kubectl get nodes
+  become_user: vagrant
+  shell: kubectl get nodes -o wide
+  register: nodes
+  delegate_to: control
+  tags: getnodes
+  run_once: yes
+
+- debug:
+    var: nodes.stdout_lines
+  tags: getnodes
+  delegate_to: control
+  run_once: yescl
