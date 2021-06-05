@@ -23,7 +23,7 @@ ubuntu 20.4 LTS Focal (guest OS)
 
 
 ## Notes
-***
+
 #### k8s version
 Kubernetes version here is `1.20.1-00`. Reason being is in the course there's a section explaining how to upgrade k8s cluster, hence latest version isnt't expected.
 Change in `roles/k8s-install/defaults/main.yaml` to what you need.
