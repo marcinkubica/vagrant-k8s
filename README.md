@@ -7,10 +7,14 @@ I've been messing too much with my own setup, so having a quick build is just ni
 (Mostly) as presented in A Cloud Guru CKA lesson Chapter 2.3 "Building a Kubernetes Cluster" https://acloudguru.com/course/certified-kubernetes-administrator-cka
 
 ## Usage
+Full auto provisioning and deployment
 ```
-vagrant up && ./vagrant-k8s.sh
+vagrant up 
 ```
-Uncomment last part in `Vagrantfile` if you want to have full-auto install with just `vagrant up`
+Comment ou last section in `Vagrantfile` if you don't need full auto.
+
+#### Kick deployment again
+`./vagrant-k8s.sh` or `ansible-playbook k8s.yaml`
 
 
 ## Stuff used
@@ -33,7 +37,11 @@ Add `127.0.0.1 kubernetes.default` to `/etc/hosts` on your host if you wish to t
 Typically though this would have been achieved by another interface and EXTERNAL-IP config in your k8s
 
 #### vagrant
-INTERNAL-IP for workers is based on `enp0s8` network device as presented on my version of virtualbox.
+Typically in vagrant installs you will endup with worker's internal IPs being `10.0.2.15` This will cause inability to run `kubectl exec`
+
+I have based INTERNAL-IP for workers on `enp0s8` network device as present on my version of virtualbox.
 Adjust `internal_ipv4` variable in `hosts.yaml` if your setup is different.
 
+#### Estimated build time
+6-9 minutes on i7-3930K and fairly slowish SSD and 50Mbit internet
 

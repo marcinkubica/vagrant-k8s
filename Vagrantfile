@@ -45,15 +45,12 @@ Vagrant.configure("2") do |config|
       end
   end
 
-  # Uncomment if you wish to execute full auto deployment just with 'vagrant up'
-  #
-  #config.trigger.after :up do |trigger|
-  #  trigger.name = "ansible trigger"
-  #  trigger.info = "Attempting to run ./vagrant-k8s.sh"
-  #  trigger.run  = { path: "vagrant-k8s.sh" }
-  #end
+  # Execute k8s kubeadm install
+  config.trigger.after :up do |trigger|
+    trigger.only_on = "node-02" 
+    trigger.name = "ansible trigger"
+    trigger.info = "Attempting to run ./vagrant-k8s.sh"
+    trigger.run  = { path: "vagrant-k8s.sh" }
+  end
 
 end
-
-
-

@@ -3,11 +3,13 @@
   shell: kubeadm token create --print-join-command
   register: token
   delegate_to: control
+  run_once: yes
   tags: ['join','jointoken']
 
 - debug:
     var: token.stdout
   delegate_to: control
+  run_once: yes
   tags: ['join','jointoken']
 
 - name: join workers to cluster
@@ -22,7 +24,7 @@
   register: nodes
   failed_when: nodes.rc != 1
   until: nodes.rc == 1
-  retries: 10
+  retries: 15
   delay: 10
   tags: getnodes
   delegate_to: control
