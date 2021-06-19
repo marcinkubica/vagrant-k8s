@@ -1,3 +1,3 @@
 #!/bin/env bash
 
-ansible-playbook site.yaml
+ansible-playbook k8s.yaml
