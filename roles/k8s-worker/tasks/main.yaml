@@ -42,4 +42,4 @@
     var: nodes.stdout_lines
   tags: getnodes
   delegate_to: control
-  run_once: yescl
+  run_once: yes
