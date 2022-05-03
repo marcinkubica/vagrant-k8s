@@ -54,3 +54,6 @@ You have a great chance to try them for yourself here. Otherwise try distros lik
 ### Estimated build time
 6-9 minutes on linux i7-3930K and fairly slowish SSD and 50Mbit internet (and somehow faster on a i9 mac)
 
+### Known issues
+`vagrant up --no-provision` will be ignored and ansible will still execute (and should fail safely)
+
